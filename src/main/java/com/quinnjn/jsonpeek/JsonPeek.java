@@ -1,36 +1,17 @@
 package com.quinnjn.jsonpeek;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JsonPeek {
 
-    private final JSONArray jsonArray;
-    private final JSONObject jsonObject;
+    private final JsonThing json;
 
     public static JsonPeek from(String jsonString) {
         return new JsonPeek(jsonString);
     }
 
     private JsonPeek(String jsonString){
-        JSONArray array = null;
-        JSONObject object = null;
-        try {
-            array = new JSONArray(jsonString);
-        } catch (JSONException notAnObject) {
-            try {
-                object = new JSONObject(jsonString);
-            } catch (JSONException notAnArray) {
-                throw new JSONException("Json is neither a JSONObject or JSONArray");
-            }
-        }
-        jsonArray = array;
-        jsonObject = object;
+        json = new JsonThing(jsonString);
     }
 
     public String getString(String key) {
@@ -54,44 +35,45 @@ public class JsonPeek {
     }
 
     private Object getJsonObject(String instruction) {
-        JSONObject currentObject = jsonObject;
-        JSONArray currentArray = jsonArray;
-
-        List<String> keys = new ArrayList<String>(Arrays.asList(instruction.split("\\.")));
-        String lastKey = keys.remove(keys.size() -1);
-
-        for (String key : keys) {
-            int keyInt = optInt(key, -1);
-
-            if (keyInt >= 0) {
-                try {
-                    currentArray = currentArray.getJSONArray(keyInt);
-                } catch (Exception e) {
-                    currentObject = currentArray.getJSONObject(keyInt);
-                }
-            } else {
-                try {
-                    currentArray = currentObject.getJSONArray(key);
-                } catch (Exception e) {
-                    currentObject = currentObject.getJSONObject(key);
-                }
-            }
-        }
-
-        int keyInt = optInt(lastKey, -1);
-        if (keyInt >= 0) {
-            try {
-                return currentArray.get(keyInt);
-            } catch (Exception e) {
-                return currentArray.get(keyInt);
-            }
-        } else {
-            try {
-                return currentObject.get(lastKey);
-            } catch (Exception e) {
-                return currentObject.get(lastKey);
-            }
-        }
+//        JSONObject currentObject = jsonObject;
+//        JSONArray currentArray = jsonArray;
+//
+//        List<String> keys = new ArrayList<String>(Arrays.asList(instruction.split("\\.")));
+//        String lastKey = keys.remove(keys.size() -1);
+//
+//        for (String key : keys) {
+//            int keyInt = optInt(key, -1);
+//
+//            if (keyInt >= 0) {
+//                try {
+//                    currentArray = currentArray.getJSONArray(keyInt);
+//                } catch (Exception e) {
+//                    currentObject = currentArray.getJSONObject(keyInt);
+//                }
+//            } else {
+//                try {
+//                    currentArray = currentObject.getJSONArray(key);
+//                } catch (Exception e) {
+//                    currentObject = currentObject.getJSONObject(key);
+//                }
+//            }
+//        }
+//
+//        int keyInt = optInt(lastKey, -1);
+//        if (keyInt >= 0) {
+//            try {
+//                return currentArray.get(keyInt);
+//            } catch (Exception e) {
+//                return currentArray.get(keyInt);
+//            }
+//        } else {
+//            try {
+//                return currentObject.get(lastKey);
+//            } catch (Exception e) {
+//                return currentObject.get(lastKey);
+//            }
+//        }
+        return null;
     }
 
     private int optInt(String s, int defaultVal) {
