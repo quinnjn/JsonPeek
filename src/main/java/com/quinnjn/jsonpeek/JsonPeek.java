@@ -23,24 +23,35 @@ public class JsonPeek {
     /**
      * Takes a json dot notation string and divides it up into each layer to dive.
      * Examples of how this should work.
+     */
+    private Object getProperty(String notation) {
+        return getJsonObject(generateInstructions(notation));
+    }
+
+
+    /**
      * - {"a":{"b":{"c":"result"}}}. want(result). notation(a.b.c). array(a, b, c)
      * - [[["a","b"]]]. want(b). notation([0][0][1]). array(0,0,1)
      * - {"a":["b","c"]}. want(c). notation(a[1]). array(a,1)
      */
-    private Object getProperty(String instruction) {
-        instruction = instruction.replaceAll("\\]\\[", ".").replaceAll("\\[", "").replaceAll("\\]", "");
-        return getJsonObject(instruction);
+    private List<String> generateInstructions(String notation) {
+        String instructions = notation.replaceAll("\\[", ".")
+                .replaceAll("\\]", "");
+
+        if (instructions.charAt(0) == '.') {
+            instructions = instructions.replaceFirst("\\.", "");
+        }
+
+        return new ArrayList<String>(Arrays.asList(instructions.split("\\.")));
     }
 
-    private Object getJsonObject(String instruction) {
+    private Object getJsonObject(List<String> keys) {
         JsonThing currentThing = json;
 
-        List<String> keys = new ArrayList<String>(Arrays.asList(instruction.split("\\.")));
         String lastKey = keys.remove(keys.size() -1);
 
         for (String key : keys) {
             int keyInt = optInt(key, -1);
-
             if (keyInt >= 0) {
                 currentThing = currentThing.get(keyInt);
             } else {
