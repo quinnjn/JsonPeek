@@ -28,7 +28,6 @@ public class JsonPeek {
         return getJsonObject(generateInstructions(notation));
     }
 
-
     /**
      * - {"a":{"b":{"c":"result"}}}. want(result). notation(a.b.c). array(a, b, c)
      * - [[["a","b"]]]. want(b). notation([0][0][1]). array(0,0,1)
