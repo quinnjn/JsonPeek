@@ -16,6 +16,13 @@ public class JsonPeek {
         json = JsonThing.from(jsonString);
     }
 
+    public double getDouble(String key) {
+        return (Double) getProperty(key);
+    }
+    public int getInt(String key) {
+        return (Integer) getProperty(key);
+    }
+
     public String getString(String key) {
         return (String) getProperty(key);
     }
