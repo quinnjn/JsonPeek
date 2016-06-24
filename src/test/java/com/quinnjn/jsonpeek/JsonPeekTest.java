@@ -65,4 +65,5 @@ public class JsonPeekTest {
         String actual = JsonPeek.from(jsonString).getString("[0][0][1]");
         assertEquals(expected, actual);
     }
+
 }
