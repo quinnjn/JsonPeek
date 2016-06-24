@@ -29,10 +29,10 @@ public class JsonPeekTest {
 
     @Test
     public void getString_whenMultiNested_returnsString() {
-        String jsonString = "{\"nested\":{\"kString\":\"v\"}}";
+        String jsonString = "{\"top\":{\"mid\":{\"kString\":\"v\"}}}";
         String expected = "v";
 
-        String actual = JsonPeek.from(jsonString).getString("nested.kString");
+        String actual = JsonPeek.from(jsonString).getString("top.mid.kString");
         assertEquals(expected, actual);
     }
 }
