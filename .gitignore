@@ -1,6 +1,8 @@
 # Intellij
 .idea/workspace.xml
 .idea/gradle.xml
+.idea/vcs.xml
 
 #Gradle
 .gradle
+build/
